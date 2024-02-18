@@ -3,9 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"io/ioutil"
 
 	//"io/ioutil"
+
 	"log"
 	"os"
 	"path/filepath"
@@ -40,7 +40,8 @@ package main
 import (
     "fmt"
     "syscall/js"
-    object "arkhangelskiy-dv.ru/wasm_js_object"
+    
+	object "github.com/wanderer69/js_object"
 )
 
 type FuncCallBack func(this js.Value, args []js.Value, jso *object.JSObject) interface{}
@@ -395,10 +396,12 @@ func main() {
 
 	if len(file_input) == 0 {
 		fmt.Printf("Must be path and name input file\r\n")
+		flag.PrintDefaults()
 		return
 	}
 	if len(path_output) == 0 {
 		fmt.Printf("Must be path to output file\r\n")
+		flag.PrintDefaults()
 		return
 	}
 
@@ -421,8 +424,7 @@ func main() {
 		return
 	}
 
-	bs, err := ioutil.ReadFile(file_input)
-
+	bs, err := os.ReadFile(file_input)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -471,6 +473,7 @@ func main() {
 								esd[esc.Name] = esc_
 							} else {
 								// error!!!
+								log.Printf("error: len stack element == 0\r\n")
 							}
 						}
 					case "label":
@@ -488,6 +491,7 @@ func main() {
 								esd[escc.Name] = escc
 							} else {
 								// error!!!
+								log.Printf("error: len stack element == 0\r\n")
 							}
 						}
 					case "group":
@@ -513,6 +517,7 @@ func main() {
 								esd[escc.Name] = escc
 							} else {
 								// error!!!
+								log.Printf("error: len stack element == 0\r\n")
 							}
 						}
 					case "image":
@@ -527,6 +532,7 @@ func main() {
 								esd[esc.Name] = esc_
 							} else {
 								// error!!!
+								log.Printf("error: len stack element == 0\r\n")
 							}
 						}
 					default:
@@ -543,6 +549,7 @@ func main() {
 								esd[esc.Name] = esc_
 							} else {
 								// error!!!
+								log.Printf("error: len stack element == 0\r\n")
 							}
 						}
 					}
@@ -577,6 +584,7 @@ func main() {
 									esd[esc.Name] = esc_
 								} else {
 									// error!!!
+									log.Printf("error: len stack element == 0\r\n")
 								}
 							}
 						}
@@ -605,5 +613,5 @@ func main() {
 
 	//fmt.Printf("%v", ss)
 	fo := filepath.Join(path_output, "app_data.go")
-	_ = ioutil.WriteFile(fo, []byte(ss), 0644)
+	_ = os.WriteFile(fo, []byte(ss), 0644)
 }
